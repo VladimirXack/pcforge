@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import { CATEGORIES, ALL_COMPONENTS } from '../../data/index.js';
+---
+
+<Base title="Components" activePage="components">
+  <main class="page">
+    <div class="page-header">
+      <p class="page-header__tag">// Components</p>
+      <h1 class="page-header__title">Browse All Components</h1>
+      <p class="page-header__sub">Select a category to explore products</p>
+    </div>
+
+    <div class="grid-border grid-categories" style="margin:1.5rem 2rem;">
+      {CATEGORIES.map(cat => (
+        <a href={`/components/${cat.id}`} class="cat-card">
+          <span class="cat-card__icon">{cat.icon}</span>
+          <span class="cat-card__name">{cat.name}</span>
+          <span class="cat-card__count">{ALL_COMPONENTS[cat.id].length} products</span>
+        </a>
+      ))}
+    </div>
+  </main>
+</Base>

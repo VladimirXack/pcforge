@@ -1,0 +1,51 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  activePage?: string;
+}
+
+const { title = 'PCForge', description = 'Build your perfect PC', activePage = '' } = Astro.props;
+const fullTitle = title === 'PCForge' ? 'PCForge — Build Your Ultimate Rig' : `${title} | PCForge`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{fullTitle}</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/" class="navbar__logo">PC<em>FORGE</em></a>
+    <ul class="navbar__links">
+      <li><a href="/"            class={`navbar__link ${activePage === 'home'       ? 'navbar__link--active' : ''}`}>Overview</a></li>
+      <li><a href="/components"  class={`navbar__link ${activePage === 'components' ? 'navbar__link--active' : ''}`}>Components</a></li>
+      <li><a href="/builder"     class={`navbar__link ${activePage === 'builder'    ? 'navbar__link--active' : ''}`}>PC Builder</a></li>
+      <li><a href="/compare"     class={`navbar__link ${activePage === 'compare'    ? 'navbar__link--active' : ''}`}>Compare</a></li>
+    </ul>
+    <a href="/builder" class="navbar__cta">Build My PC →</a>
+  </nav>
+
+  <!-- PAGE CONTENT -->
+  <slot />
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__logo">PC<em>FORGE</em></div>
+      <div class="footer__copy mono">© {new Date().getFullYear()} PCForge — All specs are illustrative.</div>
+    </div>
+  </footer>
+
+</body>
+</html>

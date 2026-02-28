@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import { CATEGORIES, getComponents, getCategoryById, getDetailSpecs, getSpecChips } from '../data/index.js';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const cat of CATEGORIES) {
+    const items = getComponents(cat.id);
+    for (const item of items) {
+      paths.push({
+        params: { categoryslug: `${cat.id}-${item.id}` },
+        props: { cat, item, catId: cat.id },
+      });
+    }
+  }
+  return paths;
+}
+
+const { cat, item, catId } = Astro.props;
+const specs = getDetailSpecs(catId, item);
+const chips = getSpecChips(catId, item);
+---
+
+<Base title={`${item.brand} ${item.name}`} activePage="components">
+  <main class="page">
+    <div class="detail-wrap">
+      <div class="detail-hero-section">
+        <a href={`/components/${catId}`} class="detail-back">← Back to {cat.name}</a>
+        <div class="detail-grid">
+          <div>
+            <div class="detail-image" aria-hidden="true">{cat.icon}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1.5rem;">
+              {chips.map(c => <span class="spec-chip">{c}</span>)}
+            </div>
+            <table class="specs-table">
+              <tbody>
+                {specs.map(([label, val]) => (
+                  <tr><td>{label}</td><td>{val}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <p class="detail-brand">{item.brand}</p>
+            <h1 class="detail-name">{item.name}</h1>
+            <div class="price-box">
+              <div class="price-box__price">${item.price}</div>
+              <a href={`/builder?add=${catId}:${item.id}`} class="btn btn--primary btn--full price-box__btn">
+                + Add to PC Build
+              </a>
+              <a href={`/compare?cat=${catId}&a=${item.id}`} class="btn btn--secondary btn--full price-box__btn" style="margin-top:0.5rem;">
+                Compare with Others
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Base>

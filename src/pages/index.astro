@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import { CATEGORIES, ALL_COMPONENTS } from '../data/index.js';
+
+const totalComponents = Object.values(ALL_COMPONENTS).reduce((s, arr) => s + arr.length, 0);
+---
+
+<Base title="PCForge" activePage="home">
+  <main class="hero">
+    <div class="hero__grid" aria-hidden="true"></div>
+    <div class="hero__glow"  aria-hidden="true"></div>
+
+    <div class="hero__content">
+      <p class="hero__tag">// Next-Gen PC Configurator</p>
+
+      <h1 class="hero__title">
+        BUILD YOUR<br />
+        <em>ULTIMATE RIG</em>
+      </h1>
+
+      <p class="hero__sub">
+        Browse curated components, compare specs side-by-side, and configure your perfect PC with an intelligent compatibility engine — all at zero latency.
+      </p>
+
+      <div class="hero__btns">
+        <a href="/builder"    class="btn btn--primary">Start Building →</a>
+        <a href="/components" class="btn btn--secondary">Browse Components</a>
+      </div>
+
+      <div class="hero__stats">
+        <div>
+          <div class="hero__stat-num">{CATEGORIES.length}</div>
+          <div class="hero__stat-label">Categories</div>
+        </div>
+        <div>
+          <div class="hero__stat-num">{totalComponents}+</div>
+          <div class="hero__stat-label">Components</div>
+        </div>
+        <div>
+          <div class="hero__stat-num">100%</div>
+          <div class="hero__stat-label">Compat Checks</div>
+        </div>
+        <div>
+          <div class="hero__stat-num">0ms</div>
+          <div class="hero__stat-label">Load Time</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Quick category preview -->
+  <section style="max-width:1400px;margin:0 auto;padding:4rem 2rem;">
+    <p class="page-header__tag" style="margin-bottom:0.75rem;">// BROWSE BY CATEGORY</p>
+    <div class="grid-border grid-categories" style="margin:0;">
+      {CATEGORIES.map(cat => (
+        <a href={`/components/${cat.id}`} class="cat-card">
+          <span class="cat-card__icon">{cat.icon}</span>
+          <span class="cat-card__name">{cat.name}</span>
+          <span class="cat-card__count mono">{ALL_COMPONENTS[cat.id].length} products</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

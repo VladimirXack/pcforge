@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import Compare from '../../components/react/Compare.jsx';
+import { CATEGORIES, ALL_COMPONENTS } from '../../data/index.js';
+---
+
+<Base title="Compare Components" activePage="compare">
+  <main class="page">
+    <div class="page-header">
+      <p class="page-header__tag">// COMPARE</p>
+      <h1 class="page-header__title">Compare Components</h1>
+      <p class="page-header__sub">Select up to 4 components of the same type to compare side-by-side</p>
+    </div>
+
+    <Compare
+      client:load
+      categoriesData={CATEGORIES}
+      componentsData={ALL_COMPONENTS}
+    />
+  </main>
+</Base>

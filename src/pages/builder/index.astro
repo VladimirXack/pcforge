@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+import Builder from '../../components/react/Builder.jsx';
+import { CATEGORIES, ALL_COMPONENTS } from '../../data/index.js';
+
+// Pass all component data to the React island (static JSON — no API calls)
+const componentsData = ALL_COMPONENTS;
+const categoriesData = CATEGORIES;
+---
+
+<Base title="PC Builder" activePage="builder">
+  <main class="page">
+    <Builder
+      client:load
+      categoriesData={categoriesData}
+      componentsData={componentsData}
+    />
+  </main>
+</Base>
